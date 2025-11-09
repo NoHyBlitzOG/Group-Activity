@@ -1,0 +1,16 @@
+#contact-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#contact-container h3 {
+    width: 60%;
+    margin: 0;
+    padding: 0;
+}
+
+#contact-container h1 {
+    margin-bottom: 0;
+    width: 60%;
+    padding: 0;
+}

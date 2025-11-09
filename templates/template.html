@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
+    {% block head %}{% endblock %}
 </head>
 <body>
     {% include "navbar.html" %}
-    {% block body %}{% endblock %}
+    <div id="content-box">
+        {% block body %}{% endblock %}
+    </div>
 </body>
 </html>

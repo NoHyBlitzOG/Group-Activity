@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block title %}
+    <title>Works</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div id="content">
+        <h1>Welcome to our programming works</h1>
+        <h2><a href="{{ url_for('queue') }}">1) Queue</a></h2>
+        <h2><a href="{{ url_for('deque') }}">2) Deque</a></h2>
+    </div>
+{% endblock %}
