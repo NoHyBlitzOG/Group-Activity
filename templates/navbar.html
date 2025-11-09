@@ -1,0 +1,15 @@
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+{% endblock %}  
+{% block body %}
+<nav>
+    <div id="navbar-left">
+        <a href="/" id="logo"> Data Structure & Algorithms</a>
+    </div>
+
+    <div id="navbar-right">
+        <a href="#" id="nav-button">About</a>
+        <a href="#" id="nav-button">Contact</a>
+    </div>
+</nav>
+{% endblock %}
