@@ -1,51 +1,53 @@
 {% extends "template.html" %}
 
-{% block title %}
-    <title>Queue</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/queue.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div id="content">
-        <h1>Queue</h1>
-        
-        {% if message %}
-        <p style="color: green; font-weight: bold; text-align: center; font-size: 18px;">{{ message }}</p>
-        {% endif %}
-        
-        <form method="POST" action="/queue" style="margin: 20px 0; text-align: center;">
-            <input type="hidden" name="action" value="add">
-            <input type="text" name="item" placeholder="Enter item..." required style="padding: 10px; font-size: 16px; width: 300px;">
-            <button type="submit" style="padding: 10px 20px; font-size: 16px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Enqueue</button>
-        </form>
-        
-        <form method="POST" action="/queue" style="margin: 20px 0; text-align: center;">
-            <input type="hidden" name="action" value="remove">
-            <button type="submit" {% if is_empty %}disabled{% endif %} style="padding: 10px 20px; font-size: 16px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer;">Dequeue</button>
-        </form>
+<div id="content">
+    <h1>Queue</h1>
 
-        <div style="margin-top: 30px;">
-            <h3 style="text-align: center;">Queue Items:</h3>
-            {% if is_empty %}
-                <p style="color: #999; text-align: center;">Queue is empty</p>
-            {% else %}
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 20px; justify-content: center;">
-                    {% for item in items %}
-                    <div style="background: #4CAF50; color: white; padding: 15px 25px; border-radius: 5px; font-size: 18px; font-weight: bold; {% if loop.first %}border: 3px solid #f44336;{% endif %} {% if loop.last %}border: 3px solid #2196F3;{% endif %}">
-                        {{ item }}
-                        {% if loop.first %}
-                        <div style="font-size: 12px; margin-top: 5px; color: #ffeb3b;">FRONT</div>
-                        {% endif %}
-                        {% if loop.last %}
-                        <div style="font-size: 12px; margin-top: 5px; color: #ffeb3b;">REAR</div>
-                        {% endif %}
-                    </div>
-                    {% if not loop.last %}
-                    <span style="font-size: 24px; color: #333;">→</span>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
+    {% if message %}
+    <p style="color: green; font-weight: bold; text-align: center; font-size: 18px;">{{ message }}</p>
+    {% endif %}
+
+    <div class="queue-actions">
+        <form method="POST" action="/queue" class="enqueue-form">
+            <input type="hidden" name="action" value="add">
+            <input type="text" name="item" placeholder="Enter item..." required>
+            <button type="submit" class="enqueue-btn">Enqueue</button>
+        </form>
+        <form method="POST" action="/queue" class="dequeue-form">
+            <input type="hidden" name="action" value="remove">
+            <button type="submit" class="dequeue-btn" {% if is_empty %}disabled{% endif %}>Dequeue</button>
+        </form>
     </div>
+
+    <div style="margin-top: 30px;">
+        <h3 style="text-align: center;">Queue Items:</h3>
+        {% if is_empty %}
+            <p style="color: #999; text-align: center;">Queue is empty</p>
+        {% else %}
+            <div class="queue-items-row">
+              {% for item in items %}
+                <div class="queue-item-box
+                  {% if loop.first %} front{% endif %}
+                  {% if loop.last %} rear{% endif %}">
+                  {{ item }}
+                  {% if loop.first %}
+                    <div class="queue-label">FRONT</div>
+                  {% endif %}
+                  {% if loop.last %}
+                    <div class="queue-label">REAR</div>
+                  {% endif %}
+                </div>
+                {% if not loop.last %}
+                  <span class="arrow">&#8594;</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

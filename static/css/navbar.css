@@ -1,49 +1,348 @@
 nav {
-    background-color: #333;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-    margin: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}   
+  background: #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 34px;
+  min-height: 60px;
+  margin-bottom: 20px;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.13);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
 
 #navbar-left {
-    display: flex;
-    align-items: center;
-    font-family: verdana;
-    font-size: 20px;
+  display: flex;
+  align-items: center;
 }
 
 #navbar-right {
-    display: flex;
-    align-items: center;
-
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-#nav-button{
-    font-family: verdana;
-    font-size: 20px;
-    color: white;
-    padding: 14px 20px;
-    text-decoration: none;
-    text-align: center;
-}
-
+/* Title/Logo */
 #logo {
-    font-weight: 900;
-    font-family: verdana;
-    font-size: 20px;
-    color: white;
-    padding: 14px 20px;
-    text-decoration: none;
-    margin-right: 0.5em;
+  color: #e3e6fa;
+  font-weight: 900;
+  padding: 16px 24px 16px 0;
+  background: transparent;
+  text-decoration: none;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  transition: color 0.15s;
+}
+#logo:hover {
+  color: #7ca2ff;
 }
 
-#nav-button:hover {
-    background-color: #00000048;
-    color: white;
-    border-radius: 10px;
+/* Buttons */
+#nav-button,
+.dropdown-toggle {
+  color: #e3e6fa;
+  background: transparent;
+  padding: 11px 15px;
+
+  text-decoration: none;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  margin-left: 6px;
+  transition: background 0.14s, color 0.14s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+/* Hover */
+#nav-button:hover, #nav-button:focus,
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+  background: #333b53;
+  color: #8ab4ff;
+}
+
+/* Dropdown Styles */
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Trigger button appearance */
+.dropdown-toggle {
+  color: #e5e9ff;
+  background: #283550;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 13px 21px;
+  border-radius: 12px;
+  transition: background 0.13s, color 0.13s;
+  text-shadow: 0 2px 8px #0001;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: block;
+}
+
+/* Show dropdown menu on hover or focus-within of wrapper */
+.dropdown-wrapper:hover .dropdown-menu,
+.dropdown-wrapper:focus-within .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;  /* Right below the trigger button, no gap */
+  left: 0;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(44,48,80,0.16);
+  min-width: 170px;
+  z-index: 999;
+  padding: 10px 0;
+  animation: dropdown-fade 0.18s;
+  border: 1.5px solid #e5e9ef;
+}
+
+@keyframes dropdown-fade {
+  0% { opacity: 0; transform: translateY(-10px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+
+.dropdown-menu a {
+  color: #243c5c;
+  padding: 14px 28px;
+  text-decoration: none;
+  display: block;
+  border-radius: 7px;
+  font-size: 1.13rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.14s, color 0.14s;
+  margin: 2px 0;
+}
+
+.dropdown-menu a:hover {
+  background: #e8f0fe;
+  color: #1952ad;
+}
+
+/* Standard nav link */
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+  transition: background 0.13s;
+}
+nav a:hover { background: rgba(43,124,255,0.08); }
+
+/* Responsive for mobile */
+@media (max-width: 700px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 7px;
+    min-height: 44px;
+  }
+  #logo {
+    font-size: 1.07rem;
+    padding: 10px 0;
+    margin-bottom: 2px;
+  }
+  #navbar-right {
+    gap: 10px;
+    margin-top: 2px;
+  }
+  #nav-button, .dropdown-toggle {
+    padding: 9px 10px;
+    font-size: 1.01rem;
+  }
+  .dropdown-menu {
+    min-width: 120px;
+    left: 0;
+    right: auto;
+  }
+}
+
+nav {
+  /* Deep Pine Green background */
+  background: #0f3d2e;
+  border-bottom: 3px solid #b71c1c; /* Festive Red border */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 34px;
+  min-height: 60px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+#navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+#navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Title/Logo - Gold/White */
+#logo {
+  color: #fff;
+  text-shadow: 0 0 5px #ffd700; /* Gold glow */
+  font-weight: 900;
+  padding: 16px 24px 16px 0;
+  background: transparent;
+  text-decoration: none;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  transition: color 0.15s;
+}
+#logo:hover {
+  color: #ffd700; /* Gold on hover */
+}
+
+/* Buttons */
+#nav-button,
+.dropdown-toggle {
+  color: #f0f0f0;
+  background: transparent;
+  padding: 11px 15px;
+  text-decoration: none;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  margin-left: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  border-radius: 20px; /* Softer, rounder buttons */
+}
+
+/* Hover - Frosty Effect */
+#nav-button:hover, #nav-button:focus,
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffd700;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Dropdown Styles */
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Trigger button appearance */
+.dropdown-toggle {
+  color: #fff;
+  background: #b71c1c; /* Holiday Red Button */
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 13px 21px;
+  border-radius: 25px; /* Pill shape */
+  transition: background 0.13s, color 0.13s;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  cursor: pointer;
+  border: 1px solid #d32f2f;
+  outline: none;
+  display: block;
+}
+
+.dropdown-toggle:hover {
+    background: #c62828;
+}
+
+/* Show dropdown menu on hover or focus-within of wrapper */
+.dropdown-wrapper:hover .dropdown-menu,
+.dropdown-wrapper:focus-within .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 110%; 
+  left: 0;
+  background: #fff; /* Snowy White */
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(183, 28, 28, 0.15); /* Red tinted shadow */
+  min-width: 170px;
+  z-index: 999;
+  padding: 10px 0;
+  animation: dropdown-fade 0.18s;
+  border: 2px solid #0f3d2e; /* Green border */
+}
+
+@keyframes dropdown-fade {
+  0% { opacity: 0; transform: translateY(-10px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+
+.dropdown-menu a {
+  color: #0f3d2e; /* Dark Green Text */
+  padding: 14px 28px;
+  text-decoration: none;
+  display: block;
+  border-radius: 7px;
+  font-size: 1.13rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.14s, color 0.14s;
+  margin: 2px 5px;
+}
+
+.dropdown-menu a:hover {
+  background: #e0f2f1; /* Very light icy green */
+  color: #c62828; /* Red text on hover */
+}
+
+/* Standard nav link */
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+  transition: background 0.13s;
+}
+nav a:hover { background: rgba(255,255,255,0.15); }
+
+/* Responsive for mobile */
+@media (max-width: 700px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 7px;
+    min-height: 44px;
+  }
+  #logo {
+    font-size: 1.07rem;
+    padding: 10px 0;
+    margin-bottom: 2px;
+  }
+  #navbar-right {
+    gap: 10px;
+    margin-top: 2px;
+  }
+  #nav-button, .dropdown-toggle {
+    padding: 9px 10px;
+    font-size: 1.01rem;
+  }
+  .dropdown-menu {
+    min-width: 120px;
+    left: 0;
+    right: auto;
+  }
 }

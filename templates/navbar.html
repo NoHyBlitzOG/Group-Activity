@@ -1,17 +1,25 @@
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
-{% endblock %}  
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+{% endblock %}
+
 {% block body %}
 <nav>
-    <div id="navbar-left">
-        <a href="/" id="logo"> Data Structure & Algorithms</a>
-        <a href="/works" id="nav-button">Works</a>
-
+  <div id="navbar-left">
+    <a id="logo" href="{{ url_for('index') }}">Data Structures and Algorithm</a>
+  </div>
+  <div id="navbar-right">
+    <div class="dropdown-wrapper">
+      <a id="nav-button" href="{{ url_for('works') }}" class="button" class="dropdown-toggle" tabindex="0">Works ▼</a>
+      <div class="dropdown-menu">
+        <a href="{{ url_for('queue') }}">Queue</a>
+        <a href="{{ url_for('deque') }}">Deque</a>
+        <a href="{{ url_for('tree') }}">Binary Tree</a>
+        <a href="{{ url_for('bst') }}">BST</a>
+        <a href="{{ url_for('graph') }}">Graph</a>
+        <a href="{{ url_for('sorting') }}">Sorting</a>
+      </div>
     </div>
-
-    <div id="navbar-right">
-        <a href="#" id="nav-button">About</a>
-        <a href="/contact" id="nav-button">Contact</a>
-    </div>
+    <a id="nav-button" href="{{ url_for('contact') }}">Contact</a>
+  </div>
 </nav>
 {% endblock %}

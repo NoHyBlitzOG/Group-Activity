@@ -1,16 +1,512 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(to bottom, #02111b 0%, #0a2e4e 50%, #1c4b75 100%);
+  background-attachment: fixed;
+  color: #e3f2fd; 
+  overflow-x: hidden; 
+}
+
 #contact-container {
-    display: flex;
-    flex-direction: column;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 40px 20px;
+  position: relative;
 }
 
-#contact-container h3 {
-    width: 60%;
-    margin: 0;
-    padding: 0;
+#contact-container::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  right: 20px;
+  height: 10px;
+  border-top: 3px solid #555; 
+  border-radius: 50%;
+  z-index: 1;
 }
 
-#contact-container h1 {
-    margin-bottom: 0;
-    width: 60%;
-    padding: 0;
+#contact-main > section > h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+  color: #c62828; 
+  text-shadow: 
+    2px 2px 0px #fff, 
+    4px 4px 0px #e0e0e0; 
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+#contact-main > section > h1::after {
+  content: " 🌿";
+  font-size: 0.8em;
+  vertical-align: middle;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 20px;
+}
+
+/* --- CONTACT CARDS (CHRISTMAS GIFT STYLE) --- */
+.contact-card {
+  position: relative;
+  width: 280px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 14px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden; 
+  z-index: 1;
+}
+
+/* --- THE RIBBON (Vertical Strip) --- */
+.contact-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  z-index: -1; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* --- THE BOW (Top Knot) --- */
+.contact-card::after {
+  content: "🎀"; 
+  font-size: 3rem;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+/* --- WRAPPING PAPER VARIATIONS --- */
+
+/* 1. RED WRAPPER (Gold Ribbon) - For 1st, 4th members */
+.contact-card:nth-child(3n+1) {
+  /* Red Pattern */
+  background: repeating-linear-gradient(
+    45deg,
+    #b71c1c,
+    #b71c1c 10px,
+    #c62828 10px,
+    #c62828 20px
+  );
+  border: 2px solid #ffd700;
+}
+.contact-card:nth-child(3n+1)::before {
+  background: #ffd700; /* Gold Ribbon */
+  border-left: 2px dashed #b78900;
+  border-right: 2px dashed #b78900;
+}
+
+/* 2. GREEN WRAPPER (Red Ribbon) - For 2nd, 5th members */
+.contact-card:nth-child(3n+2) {
+  /* Green Pattern */
+  background: repeating-linear-gradient(
+    -45deg,
+    #1b5e20,
+    #1b5e20 10px,
+    #2e7d32 10px,
+    #2e7d32 20px
+  );
+  border: 2px solid #c62828;
+}
+.contact-card:nth-child(3n+2)::before {
+  background: #d32f2f; /* Red Ribbon */
+  border-left: 2px dotted #fff;
+  border-right: 2px dotted #fff;
+}
+
+/* 3. BLUE WRAPPER (Silver Ribbon) - For 3rd, 6th members */
+.contact-card:nth-child(3n+3) {
+  /* Blue Pattern */
+  background: radial-gradient(circle, #1565c0 10%, #0d47a1 90%);
+  border: 2px solid #e0e0e0;
+}
+.contact-card:nth-child(3n+3)::before {
+  background: #e0e0e0; /* Silver Ribbon */
+  opacity: 0.9;
+}
+
+/* Hover Effect: Lifts up */
+.contact-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.portrait-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 3;
+
+  background: repeating-linear-gradient(
+    45deg,
+    #c62828,
+    #c62828 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  );
+  padding: 5px; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.portrait-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #fff; 
+}
+
+/* --- TEXT STYLING (UPDATED FOR WRAPPERS) --- */
+.contact-card h2 {
+  font-size: 1.25rem;
+  margin: 10px 0 0 0;
+  color: #fff; 
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  font-weight: 800;
+  text-align: center;
+  z-index: 2;
+}
+
+.contact-card p {
+  margin-top: 5px;
+  z-index: 2;
+}
+
+/* --- LINKS / BUTTONS --- */
+.contact-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #333; 
+  font-weight: 700;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.9); 
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s;
+  z-index: 2;
+  position: relative;
+}
+
+/* Icon Colors */
+.contact-card a i {
+  margin-right: 5px;
+}
+/* Facebook Blue */
+.contact-card a[href*="facebook"] i { color: #1877f2; }
+/* Github Black */
+.contact-card a[href*="github"] i { color: #333; }
+/* Gmail Red */
+.contact-card a[href*="mailto"] i { color: #c71610; }
+
+.contact-card a:hover {
+  background: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #fff; 
+}
+
+@media (max-width: 700px) {
+  #contact-container {
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
+  .contact-card {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    padding: 30px 20px;
+  }
+
+  .portrait-container {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.scenery-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; 
+  pointer-events: none; 
+}
+
+.mountain {
+  position: absolute;
+  bottom: -50px;
+  border-radius: 100% 100% 0 0; 
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mountain-back {
+  width: 150%;
+  height: 40vh;
+  background: #467196;
+  opacity: 0.8;
+  bottom: -20px;
+  z-index: 1;
+}
+
+.mountain-mid {
+  width: 130%;
+  height: 30vh;
+  background: #90caf9;
+  left: 60%;
+  z-index: 2;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.mountain-front {
+  width: 120%;
+  height: 20vh;
+  background: #e3f2fd; 
+  left: 40%;
+  z-index: 3;
+  box-shadow: 0 -5px 15px rgba(255, 255, 255, 0.5);
+}
+
+.snowman {
+  position: absolute;
+  bottom: 5vh; 
+  left: 10%; 
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
+  animation: bounce 3s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.snowman-head, .snowman-body-middle, .snowman-body-bottom {
+  background: radial-gradient(circle at 30% 30%, #fff, #cfd8dc);
+  border-radius: 50%;
+}
+
+.snowman-head {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  z-index: 12;
+}
+
+.snowman-body-middle {
+  width: 70px;
+  height: 70px;
+  margin-top: -15px; 
+  z-index: 11;
+  position: relative;
+}
+
+.snowman-body-middle::after {
+  content: "";
+  position: absolute;
+  top: 25px; left: 50%; transform: translateX(-50%);
+  width: 6px; height: 6px;
+  background: #37474f;
+  border-radius: 50%;
+  box-shadow: 0 15px 0 #37474f; 
+}
+
+.snowman-body-bottom {
+  width: 90px;
+  height: 90px;
+  margin-top: -20px; 
+  z-index: 10;
+}
+
+.eye {
+  position: absolute;
+  top: 18px;
+  width: 5px; height: 5px;
+  background: #212121;
+  border-radius: 50%;
+}
+.eye-left { left: 14px; }
+.eye-right { right: 14px; }
+
+.nose {
+  position: absolute;
+  top: 22px; left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 12px solid #ff6f00; 
+}
+
+.scarf {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 50px; height: 12px;
+  background: #d32f2f; 
+  border-radius: 10px;
+  z-index: 15;
+}
+.scarf::after {
+  content: "";
+  position: absolute;
+  right: 5px; top: 5px;
+  width: 10px; height: 25px;
+  background: #d32f2f;
+  transform: rotate(-15deg);
+}
+
+.hat {
+  position: absolute;
+  top: -18px; left: 50%;
+  transform: translateX(-50%);
+  width: 30px; height: 25px;
+  background: #37474f;
+  z-index: 20;
+}
+.hat::before { 
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 50px; height: 6px;
+  background: #37474f;
+  border-radius: 2px;
+}
+.hat::after { 
+  content: "";
+  position: absolute;
+  bottom: 6px; left: 0;
+  width: 100%; height: 5px;
+  background: #d32f2f;
+}
+
+.arm {
+  position: absolute;
+  top: 20px;
+  width: 40px; height: 3px;
+  background: #5d4037; 
+}
+.arm-left {
+  left: -30px;
+  transform: rotate(20deg);
+}
+.arm-right {
+  right: -30px;
+  transform: rotate(-20deg);
+}
+
+@media (max-width: 768px) {
+  .snowman {
+    display: none;
+  }
+}
+
+.moon {
+  position: absolute;
+  top: 60px;
+  right: 10%;
+  width: 80px;
+  height: 80px;
+  background: #fdf1c0; 
+  border-radius: 50%;
+  box-shadow: 0 0 20px #fdf1c0, 0 0 60px rgba(253, 241, 192, 0.4);
+  z-index: 0;
+}
+
+.moon::after {
+  content: "";
+  position: absolute;
+  top: 20px; left: 15px;
+  width: 20px; height: 20px;
+  background: rgba(200, 200, 200, 0.2);
+  border-radius: 50%;
+  box-shadow: 25px 15px 0 -5px rgba(200, 200, 200, 0.2);
+}
+
+.stars {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background-image: 
+      radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+      radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+      radial-gradient(2px 2px at 50px 160px, #fff, transparent),
+      radial-gradient(2px 2px at 90px 40px, #fff, transparent),
+      radial-gradient(2px 2px at 130px 80px, #fff, transparent),
+      radial-gradient(2px 2px at 160px 120px, #fff, transparent);
+  background-size: 200px 200px;
+  opacity: 0.8;
+}
+
+.snow {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none; 
+  z-index: 100; 
+}
+
+.layer1 {
+  background-image: radial-gradient(circle, #fff 4px, transparent 5px);
+  background-size: 500px 500px; 
+  animation: fall 10s linear infinite;
+  opacity: 0.9;
+}
+
+.layer2 {
+  background-image: radial-gradient(circle, #fff 3px, transparent 4px);
+  background-size: 400px 400px;
+  animation: fall 15s linear infinite;
+  opacity: 0.6;
+}
+
+.layer3 {
+  background-image: radial-gradient(circle, #fff 2px, transparent 3px);
+  background-size: 300px 300px;
+  animation: fall 20s linear infinite;
+  opacity: 0.4;
+}
+
+@keyframes fall {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100vh; 
+  }
 }

@@ -1,0 +1,59 @@
+{% extends "template.html" %}
+
+{% block title %}
+    <title>Binary Tree</title>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tree.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <h1>Binary Tree</h1>
+
+    {% if message %}
+    <div class="message">{{ message }}</div>
+    {% endif %}
+
+    <div class="form-row">
+        <form method="POST" action="{{ url_for('tree_insert') }}" class="inline-form">
+            <input type="text" name="parent" placeholder="Parent (existing or new root)" required>
+            <input type="text" name="value" placeholder="Value to insert" required>
+            <select name="side">
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
+            <button type="submit" class="btn btn-green">Insert</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('tree_search') }}" class="inline-form">
+            <input type="text" name="search_key" placeholder="Search value">
+            <button type="submit" class="btn btn-blue">Search</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('tree_delete') }}" class="inline-form">
+            <input type="text" name="delete_key" placeholder="Delete value">
+            <button type="submit" class="btn btn-red">Delete</button>
+        </form>
+    </div>
+
+    <div class="traversals">
+        <div><strong>Preorder:</strong> {{ traversals.preorder or '-' }}</div>
+        <div><strong>Inorder:</strong> {{ traversals.inorder or '-' }}</div>
+        <div><strong>Postorder:</strong> {{ traversals.postorder or '-' }}</div>
+    </div>
+
+    <div class="viz">
+        {% if svg_html %}
+            {{ svg_html|safe }}
+        {% else %}
+            <p class="muted">Tree is empty — insert a root by typing the parent value for your first insert.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+

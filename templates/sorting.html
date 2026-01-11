@@ -1,0 +1,290 @@
+{% extends "template.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sorting.css') }}">
+{% endblock %}
+
+{% block body %}
+<div id="content">
+    <h1>Sorting Algorithms</h1>
+    
+    {% if message %}
+    <p style="color: green; font-weight: bold; text-align: center; font-size: 18px;">{{ message }}</p>
+    {% endif %}
+
+    <!-- Algorithm Selection and Input -->
+    <div class="sorting-control">
+        <form method="POST" action="/sorting">
+            <div class="form-group">
+                <label for="algorithm">Select Algorithm:</label>
+                <select name="algorithm" id="algorithm" required>
+                    <option value="bubble">Bubble Sort</option>
+                    <option value="selection">Selection Sort</option>
+                    <option value="insertion">Insertion Sort</option>
+                    <option value="merge">Merge Sort</option>
+                    <option value="quick">Quicksort</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="array_input">Enter Numbers (space or comma separated):</label>
+                <input type="text" name="array_input" id="array_input" 
+                       placeholder="e.g., 64 34 25 12 22 11 90" required>
+            </div>
+            
+            <button type="submit" class="sort-btn">Sort</button>
+        </form>
+    </div>
+
+    <!-- Algorithm Complexity Table -->
+    <div class="complexity-section">
+        <h2>Algorithm Complexity Comparison</h2>
+        <table class="complexity-table">
+            <thead>
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Best Case</th>
+                    <th>Average Case</th>
+                    <th>Worst Case</th>
+                    <th>Space</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, algo in algorithms.items() %}
+                <tr>
+                    <td><strong>{{ algo.name }}</strong></td>
+                    <td>{{ algo.time_best }}</td>
+                    <td>{{ algo.time_avg }}</td>
+                    <td>{{ algo.time_worst }}</td>
+                    <td>{{ algo.space }}</td>
+                    <td>{{ algo.description }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Results and Visualization -->
+    {% if result %}
+    <div class="results-section">
+        <h2>{{ result.info.name }} Results</h2>
+        
+        <div class="array-display">
+            <div class="array-box">
+                <h3>Original Array</h3>
+                <div class="array-items">
+                    {% for item in result.original %}
+                    <div class="array-item">{{ item }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="array-box">
+                <h3>Sorted Array</h3>
+                <div class="array-items">
+                    {% for item in result.sorted %}
+                    <div class="array-item sorted">{{ item }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Animation Controls -->
+        <div class="animation-section">
+            <h3>Sorting Animation</h3>
+            <div class="animation-controls">
+                <button id="playBtn" class="control-btn">▶ Play</button>
+                <button id="pauseBtn" class="control-btn" disabled>⏸ Pause</button>
+                <button id="resetBtn" class="control-btn">↺ Reset</button>
+                <label for="speedControl">Speed (ms):</label>
+                <input type="number" id="speedControl" min="100" max="3000" value="500" step="50">
+            </div>
+            
+            <div id="animationContainer" class="animation-container">
+                <div id="stepDescription" class="step-description"></div>
+                <div id="visualArray" class="visual-array"></div>
+                <div id="stepInfo" class="step-info">Step: <span id="currentStep">0</span> / <span id="totalSteps">0</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const steps = {{ result.steps | tojson }};
+        const algorithm = "{{ result.algorithm }}";
+        
+        let currentStep = 0;
+        let animationInterval = null;
+        let animationSpeed = 500;
+        
+        const visualArray = document.getElementById('visualArray');
+        const stepDescription = document.getElementById('stepDescription');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const speedControl = document.getElementById('speedControl');
+        const currentStepDisplay = document.getElementById('currentStep');
+        const totalStepsDisplay = document.getElementById('totalSteps');
+        
+        totalStepsDisplay.textContent = steps.length;
+        
+        function getStepDescription(stepData, stepNum) {
+            const comparing = stepData.comparing || [];
+            const swapped = stepData.swapped || [];
+            const sorted = stepData.sorted || [];
+            const pivot = stepData.pivot !== undefined ? stepData.pivot : -1;
+            const arr = stepData.array;
+            
+            if (sorted.length === arr.length) {
+                return '✅ Sorting complete! All elements are in order.';
+            }
+            
+            if (swapped.length > 0) {
+                return `💥 Swapping ${arr[swapped[0]]} and ${arr[swapped[1]]}!`;
+            }
+            
+            if (comparing.length === 2) {
+                const val1 = arr[comparing[0]];
+                const val2 = arr[comparing[1]];
+                if (val1 <= val2) {
+                    return `👀 Comparing ${val1} and ${val2} - No swap needed (${val1} ≤ ${val2})`;
+                } else {
+                    return `👀 Comparing ${val1} and ${val2} - Will swap (${val1} > ${val2})`;
+                }
+            }
+            
+            if (comparing.length === 1) {
+                return `🔍 Examining element ${arr[comparing[0]]} at position ${comparing[0]}`;
+            }
+            
+            if (pivot >= 0) {
+                return `📍 Pivot element: ${arr[pivot]} (partitioning array)`;
+            }
+            
+            if (sorted.length > 0) {
+                return `✓ ${sorted.length} element(s) sorted so far`;
+            }
+            
+            return 'Processing...';
+        }
+        
+        function renderArray(stepData, stepNum) {
+            visualArray.innerHTML = '';
+            const arr = stepData.array;
+            const comparing = stepData.comparing || [];
+            const swapped = stepData.swapped || [];
+            const sorted = stepData.sorted || [];
+            const pivot = stepData.pivot !== undefined ? stepData.pivot : -1;
+            
+            // Update description
+            stepDescription.textContent = getStepDescription(stepData, stepNum);
+            
+            arr.forEach((val, idx) => {
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+                
+                // Create firecracker wrapper
+                const firecracker = document.createElement('div');
+                firecracker.className = 'firecracker';
+                
+                // Add fuse on top
+                const fuse = document.createElement('div');
+                fuse.className = 'fuse';
+                
+                // Add body (the number container)
+                const body = document.createElement('div');
+                body.className = 'firecracker-body';
+                
+                // Apply states
+                if (sorted.includes(idx)) {
+                    firecracker.classList.add('sorted');
+                } else if (swapped.includes(idx)) {
+                    firecracker.classList.add('exploding');
+                } else if (pivot === idx) {
+                    firecracker.classList.add('pivot');
+                } else if (comparing.includes(idx)) {
+                    firecracker.classList.add('comparing');
+                }
+                
+                const label = document.createElement('div');
+                label.className = 'firecracker-label';
+                label.textContent = val;
+                body.appendChild(label);
+                
+                firecracker.appendChild(fuse);
+                firecracker.appendChild(body);
+                
+                // Add arrow indicator for comparing elements
+                if (comparing.includes(idx)) {
+                    const arrow = document.createElement('div');
+                    arrow.className = 'compare-arrow';
+                    arrow.textContent = '▲';
+                    barContainer.appendChild(arrow);
+                }
+                
+                barContainer.appendChild(firecracker);
+                visualArray.appendChild(barContainer);
+            });
+        }
+        
+        function playAnimation() {
+            if (currentStep >= steps.length) {
+                currentStep = 0;
+            }
+            
+            playBtn.disabled = true;
+            pauseBtn.disabled = false;
+            
+            animationInterval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    renderArray(steps[currentStep], currentStep);
+                    currentStepDisplay.textContent = currentStep + 1;
+                    currentStep++;
+                } else {
+                    pauseAnimation();
+                }
+            }, animationSpeed);
+        }
+        
+        function pauseAnimation() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+        
+        function resetAnimation() {
+            pauseAnimation();
+            currentStep = 0;
+            currentStepDisplay.textContent = 0;
+            renderArray(steps[0], 0);
+        }
+        
+        playBtn.addEventListener('click', playAnimation);
+        pauseBtn.addEventListener('click', pauseAnimation);
+        resetBtn.addEventListener('click', resetAnimation);
+        
+        speedControl.addEventListener('change', (e) => {
+            let speed = parseInt(e.target.value);
+            if (speed < 100) speed = 100;
+            if (speed > 3000) speed = 3000;
+            animationSpeed = speed;
+            speedControl.value = speed;
+            
+            if (animationInterval) {
+                pauseAnimation();
+                playAnimation();
+            }
+        });
+        
+        // Initialize with first step
+        if (steps.length > 0) {
+            renderArray(steps[0], 0);
+        }
+    </script>
+    {% endif %}
+</div>
+{% endblock %}

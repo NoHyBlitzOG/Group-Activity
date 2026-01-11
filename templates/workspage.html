@@ -1,14 +1,67 @@
 {% extends "template.html" %}
 
-{% block title %}
-    <title>Works</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workspage.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div id="content">
-        <h1>Welcome to our programming works</h1>
-        <h2><a href="{{ url_for('queue') }}">1) Queue</a></h2>
-        <h2><a href="{{ url_for('deque') }}">2) Deque</a></h2>
+
+<ul class="light-rope">
+  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  <li></li><li></li>
+</ul>
+
+<div class="snow-container">
+    <div class="snow-layer layer-1"></div>
+    <div class="snow-layer layer-2"></div>
+    <div class="snow-layer layer-3"></div>
+</div>
+
+<div class="forest">
+    <div class="tree tree-1"></div>
+    <div class="tree tree-2"></div>
+    <div class="tree tree-3"></div>
+    <div class="tree tree-4"></div>
+</div>
+
+<main id="works-main">
+  <section class="works-section">
+    <h1 class="works-title">Welcome to Our Programming Works</h1>
+
+    <div class="works-card-grid">
+      <a href="{{ url_for('queue') }}" class="works-card card-queue">
+        <h2>Queue</h2>
+        <p>FIFO data structure for task or resource management.</p>
+      </a>
+
+      <a href="{{ url_for('deque') }}" class="works-card card-deque">
+        <h2>Deque</h2>
+        <p>Double-ended queue supporting insert/remove at both ends.</p>
+      </a>
+
+      <a href="{{ url_for('tree') }}" class="works-card card-tree">
+        <h2>Binary Tree</h2>
+        <p>Hierarchical structure for efficient data storage and traversal.</p>
+      </a>
+      
+      <a href="{{ url_for('bst') }}" class="works-card card-bst">
+        <h2>Binary Search Tree</h2>
+        <p>Ordering-based tree supporting fast search, insert and delete.</p>
+      </a>
+
+      <a href="{{ url_for('graph') }}" class="works-card card-graph">
+        <h2>MRT/LRT Graph Structure</h2>
+        <p>Find shortest path between MRT and LRT stations using Breadth-First Search (BFS).</p>
+      </a>
+
+      <a href="{{ url_for('sorting') }}" class="works-card card-sorting">
+        <h2>Sorting Algorithms</h2>
+        <p>Visualize and compare Bubble, Selection, Insertion, Merge, and Quick Sort with animations.</p>
+      </a>
     </div>
+  </section>
+</main>
 {% endblock %}

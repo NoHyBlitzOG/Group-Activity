@@ -1,0 +1,63 @@
+{% extends "template.html" %}
+
+{% block title %}
+    <title>BST (Binary Search Tree)</title>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tree.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <h1>Binary Search Tree</h1>
+
+    {% if message %}
+    <div class="message">{{ message }}</div>
+    {% endif %}
+
+    <div class="form-row">
+        <form method="POST" action="{{ url_for('bst_insert') }}" class="inline-form">
+            <input type="text" name="value" placeholder="Value to insert" required>
+            <button type="submit" class="btn btn-green">Insert</button>
+        </form>
+        <form method="POST" action="{{ url_for('bst_search') }}" class="inline-form">
+            <input type="text" name="search_key" placeholder="Search value">
+            <button type="submit" class="btn btn-blue">Search</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('bst_delete') }}" class="inline-form">
+            <input type="text" name="delete_key" placeholder="Delete value">
+            <button type="submit" class="btn btn-red">Delete</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('bst_max') }}" class="inline-form">
+            <button type="submit" class="btn btn-green">Get Max Value</button>
+        </form>
+        <form method="POST" action="{{ url_for('bst_min') }}" class="inline-form">
+            <button type="submit" class="btn btn-green">Get Min Value</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('bst_height') }}" class="inline-form">
+            <input type="text" name="height_key" placeholder="Node value for height">
+            <button type="submit" class="btn btn-red">Find Height</button>
+        </form>
+    </div>
+
+    <div class="traversals">
+        <div><strong>Preorder:</strong> {{ traversals.preorder or '-' }}</div>
+        <div><strong>Inorder:</strong> {{ traversals.inorder or '-' }}</div>
+        <div><strong>Postorder:</strong> {{ traversals.postorder or '-' }}</div>
+    </div>
+
+    <div class="viz">
+        {% if svg_html %}
+            {{ svg_html|safe }}
+        {% else %}
+            <p class="muted">Tree is empty — insert nodes via the Binary Tree page.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

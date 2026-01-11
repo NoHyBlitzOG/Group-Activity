@@ -1,29 +1,119 @@
 {% extends "template.html" %}
 
-{% block head %}
+{% block title %}
     <title>Contact</title>
+{% endblock %}
+
+{% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div id="contact-container">
-        <h1>Rodelio JR M. Antido
-            <h3>rod.jrantido@gmail.com </h3>
-        </h1>
-        <h1>John Carlo Reuel V. Bulatao
-            <h3>bulatao.johncarloreuel@gmail.com  </h3>
-        </h1>
-        <h1>Cyril D. A. Dela Cruz
-            <h3>delacruzcyril23@gmail.com</h3>
-        </h1>
-        <h1>John Jefferson B. Janer
-            <h3> janerjefferson21@gmail.com </h3>
-        </h1>
-        <h1>Pearl Ann L. Mergilla
-            <h3>annmergilla@gmail.com </h3>
-        </h1>
-        <h1>Janssen Robert S. Rosalin
-            <h3>janssenrobert1432@gmail.com</h3>
-        </h1>
+<div class="scenery-container">
+  <div class="scenery-container">
+    <div class="stars"></div>
+    <div class="moon"></div>
+    <div class="snow layer1"></div>
+    <div class="snow layer2"></div>
+    <div class="snow layer3"></div>
+    <div class="mountain mountain-back"></div>
+    <div class="mountain mountain-mid"></div>
+    <div class="mountain mountain-front"></div>
+    
+    <div class="snowman">
+        </div>
+</div>
+    <div class="mountain mountain-back"></div>
+    <div class="mountain mountain-mid"></div>
+    <div class="mountain mountain-front"></div>
+    
+    <div class="snowman">
+        <div class="snowman-body-bottom"></div>
+        <div class="snowman-body-middle">
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+        </div>
+        <div class="snowman-head">
+            <div class="snowman-face">
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+            </div>
+            <div class="hat"></div>
+            <div class="scarf"></div>
+        </div>
     </div>
+</div>
+<main id="contact-main">
+  <section id="contact-container" aria-label="Contact Information">
+    <h1>Meet the Team</h1>
+
+    <div class="contact-grid">
+
+      <article class="contact-card">
+        <div class="portrait-container">
+          <img src="{{ url_for('static', filename='images/raj.png') }}" alt="Portrait of Rodelio JR M. Antido">
+        </div>
+        <h2>Rodelio JR M. Antido</h2>
+        <p><a href="mailto:rod.jrantido@gmail.com"> <i class="fas fa-envelope"></i> rod.jrantido@gmail.com </a></p>
+        <a href="https://github.com/rodjrantido"> <i class="fab fa-github"></i> rodjrantido </a>
+        <a href="https://www.facebook.com/raj.antido"> <i class="fab fa-facebook"></i> Raj Antido  </a>
+      </article>
+
+      <article class="contact-card">
+        <div class="portrait-container">
+          <img src="{{ url_for('static', filename='images/jc.png') }}" alt="Portrait of John Carlo V. Bulatao">
+        </div>
+        <h2>John Carlo V. Bulatao</h2>
+        <p><a href="mailto:johncarloreuel@gmail.com"> <i class="fas fa-envelope"></i> johncarlo@gmail.com </a></p>
+        <a href="https://github.com/NoHyBlitzOG"> <i class="fab fa-github"></i> NoHyBlitzOG </a>
+        <a href="https://www.facebook.com/john.carlo.5817300"> <i class="fab fa-facebook"></i> John Carlo </a>
+      </article>
+
+      <article class="contact-card">
+        <div class="portrait-container">
+          <img src="{{ url_for('static', filename='images/cyril.jpg') }}" alt="Portrait of Cyril D. A. Dela Cruz">
+        </div>
+        <h2>Cyril D. A. Dela Cruz</h2>
+        <p><a href="mailto:delacruzcyril23@gmail.com"> <i class="fas fa-envelope"></i> delacruzcy@gmail.com </a></p>
+        <a href="https://github.com/Cyyy1212"> <i class="fab fa-github"></i> Cyyy1212  </a>
+        <a href="https://www.facebook.com/DelaCruzCy"> <i class="fab fa-facebook"></i> Cyril Dela Cruz </a>
+      </article>
+
+      <article class="contact-card">
+        <div class="portrait-container">
+          <img src="{{ url_for('static', filename='images/janer.jpg') }}" alt="Portrait of John Jefferson B. Janer">
+        </div>
+        <h2>John Jefferson B. Janer</h2>
+        <p><a href="mailto:jefferson21@gmail.com"> <i class="fas fa-envelope"></i> jefferson21@gmail.com </a></p>
+        <a href="https://github.com/Kassajinn"> <i class="fab fa-github"></i> Kassajinn </a>
+        <a href="https://www.facebook.com/Jeffersonnn.j#"> <i class="fab fa-facebook"></i> Jefferson Janer </a>
+      </article>
+
+      <article class="contact-card">
+        <div class="portrait-container">
+          <img src="{{ url_for('static', filename='images/ann.png') }}" alt="Portrait of Pearl Ann L. Mergilla">
+        </div>
+        <h2>Pearl Ann L. Mergilla</h2>
+        <p><a href="mailto:annmergilla@gmail.com"> <i class="fas fa-envelope"></i> annmergilla@gmail.com </a></p>
+        <a href="https://github.com/annzzz37"> <i class="fab fa-github"></i> annzzz37 </a>
+        <a href="https://www.facebook.com/annmergilla"> <i class="fab fa-facebook"></i> Ann Mergilla </a>
+      </article>
+
+      <article class="contact-card">
+        <div class="portrait-container">
+          <img src="{{ url_for('static', filename='images/ssen.jpg') }}" alt="Portrait of Janssen Robert S. Rosalin">
+        </div>
+        <h2>Janssen S. Rosalin</h2>
+        <p><a href="mailto:janssenrobert@gmail.com"> <i class="fas fa-envelope"></i> janssenrob@gmail.com </a></p>
+        <a href="https://github.com/Janssen-12"> <i class="fab fa-github"></i> Janssen-12 </a>
+        <a href="https://www.facebook.com/janssen.rosalin.3"> <i class="fab fa-facebook"></i> Janssen Robert Rosalin </a>
+      </article>
+      
+    </div>
+
+  </section>
+</main>
 {% endblock %}
+

@@ -1,1 +1,302 @@
+* {
+    margin: 0px;
+    box-sizing: border-box;
+}
 
+body {
+  /* --- NIGHT SKY BACKGROUND --- */
+  background-color: #0d1b3e;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative; 
+
+  /* BACKGROUND LAYERS (Static Scenery) */
+  background-image:
+    /* Layer 1: Pine Trees */
+    linear-gradient(225deg, transparent 80%, #1b5e20 80%),
+    linear-gradient(135deg, transparent 80%, #1b5e20 80%),
+
+    /* Layer 2: Snowy Mountains */
+    linear-gradient(225deg, transparent 70%, #eceff1 70%),
+    linear-gradient(135deg, transparent 70%, #eceff1 70%),
+
+    /* Layer 3: Aurora Borealis */
+    radial-gradient(ellipse at 50% 0%, 
+      rgba(0, 230, 118, 0.4) 0%, 
+      rgba(0, 176, 255, 0.3) 20%, 
+      rgba(101, 31, 255, 0.2) 40%, 
+      transparent 70%),
+
+    /* Layer 4: Base Sky */
+    linear-gradient(180deg, #000000 0%, #1a237e 100%);
+
+  /* SIZES */
+  background-size: 
+      60px 80px, 60px 80px, 
+      300px 250px, 300px 250px,
+      100% 100%, 100% 100%;
+
+  /* POSITIONS */
+  background-position: 
+      30px bottom, 0 bottom,
+      150px bottom, 0 bottom,
+      0 0, 0 0;
+      
+  background-repeat: repeat-x, repeat-x, repeat-x, repeat-x, no-repeat, no-repeat;
+  background-attachment: fixed;
+
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: #fff;
+  margin: 0;
+}
+
+/* --- FALLING SNOW ANIMATION --- */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; 
+  z-index: 5; 
+
+  background-image: 
+      radial-gradient(circle, rgba(255, 255, 255, 0.9) 3px, transparent 4px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.6) 4px, transparent 5px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.4) 2px, transparent 3px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.8) 2px, transparent 2.5px);
+      
+  background-size: 
+      300px 300px, 
+      500px 500px,
+      200px 200px,
+      150px 150px;
+
+  /* SLOWER SPEED: Changed from 8s to 20s */
+  animation: snow-fall 20s linear infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 50px 100vh, 100px 100vh, -30px 100vh, 20px 100vh;
+  }
+}
+
+/* DOM-based multi-layer snow (used by workspage) */
+.snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 15; /* above background, below most UI but visible */
+  overflow: hidden;
+}
+.snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none; /* won't block clicks */
+  z-index: 998 !important; /* above page content but below navbar (navbar=999) */
+  overflow: hidden;
+}
+
+.layer-1 {
+  width: 2px; height: 2px; border-radius: 50%; opacity: 0.7;
+  animation: snowfall 18s infinite linear;
+  box-shadow:
+    10vw 10vh #fff, 20vw 80vh #fff, 30vw 20vh #fff, 40vw 50vh #fff,
+    50vw 90vh #fff, 60vw 10vh #fff, 70vw 30vh #fff, 80vw 60vh #fff,
+    90vw 15vh #fff, 95vw 85vh #fff, 5vw 115vh #fff, 15vw 175vh #fff,
+    25vw 130vh #fff, 35vw 160vh #fff, 45vw 190vh #fff, 55vw 110vh #fff,
+    65vw 150vh #fff, 75vw 120vh #fff, 85vw 180vh #fff, 95vw 140vh #fff;
+}
+
+.layer-2 {
+  width: 4px; height: 4px; border-radius: 50%; opacity: 0.85;
+  animation: snowfall 12s infinite linear;
+  box-shadow:
+    5vw 15vh #fff, 25vw 35vh #fff, 45vw 55vh #fff, 65vw 75vh #fff,
+    85vw 95vh #fff, 15vw 120vh #fff, 35vw 140vh #fff, 55vw 160vh #fff;
+}
+
+.layer-3 {
+  width: 7px; height: 7px; border-radius: 50%; opacity: 1;
+  animation: snowfall 9s infinite linear;
+  box-shadow:
+    12vw 10vh rgba(255,255,255,0.9), 32vw 40vh rgba(255,255,255,0.9),
+    52vw 70vh rgba(255,255,255,0.9), 72vw 20vh rgba(255,255,255,0.9),
+    92vw 50vh rgba(255,255,255,0.9);
+  filter: blur(1px);
+}
+
+@keyframes snowfall {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+/* --- THE GIFT BOX (HERO BOX) --- */
+.hero-box {
+  max-width: 800px;
+  margin: 100px auto 0 auto;
+  padding: 60px 32px;
+  
+  /* Gift Box Red Background */
+  background-color: #d32f2f;
+  
+  /* GOLD RIBBON EFFECT (Vertical on body) */
+  background-image: linear-gradient(90deg, 
+      transparent calc(50% - 30px), 
+      #ffca28 calc(50% - 30px), 
+      #ffca28 calc(50% + 30px), 
+      transparent calc(50% + 30px)
+  );
+  
+  border-radius: 8px;
+  position: relative;
+  z-index: 10;
+
+  /* Box Lid */
+  border-top: 20px solid #b71c1c; 
+  
+  /* 3D Box Shadow */
+  box-shadow: 
+      0 25px 50px rgba(0,0,0,0.6),
+      inset 0 0 0 2px rgba(255,255,255,0.1);
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- RIBBON WRAPPER ON LID --- */
+
+/* Horizontal Ribbon on Lid */
+.hero-box::before {
+    content: "";
+    position: absolute;
+    top: -20px; /* Sits on the lid border */
+    left: 0;
+    width: 100%;
+    height: 20px; /* Same height as lid border */
+    
+    /* Gold Ribbon Style */
+    background-color: transparent;
+    background-image: linear-gradient(90deg, 
+        transparent calc(50% - 30px), 
+        #ffca28 calc(50% - 30px), 
+        #ffca28 calc(50% + 30px), 
+        transparent calc(50% + 30px)
+    );
+    z-index: 11;
+}
+
+/* Vertical Ribbon Crossing on Lid */
+.hero-box::after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px; /* Matches ribbon width */
+    height: 20px;
+    background-color: #ffca28;
+    z-index: 11;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+.hero-box h1, .hero-box p, .button {
+    z-index: 20;
+    position: relative;
+}
+
+.hero-box h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  
+  /* Gift Tag Style */
+  background: #b71c1c;
+  padding: 10px 30px;
+  transform: rotate(-2deg);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.hero-box p {
+  background: rgba(183, 28, 28, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  color: #fffde7;
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin: 20px 0 35px 0;
+  line-height: 1.6;
+  max-width: 80%;
+}
+
+/* --- GOLD BUTTON --- */
+.button {
+  background: #ffca28;
+  color: #b71c1c;
+  padding: 16px 45px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  
+  box-shadow: 0 5px 0px #c79100, 0 10px 20px rgba(0,0,0,0.4);
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background-color: #ffe082;
+  transform: translateY(3px);
+  box-shadow: 0 2px 0px #c79100, 0 5px 10px rgba(0,0,0,0.4);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 700px) {
+  .hero-box {
+    max-width: 95vw;
+    padding: 40px 15px;
+    margin-top: 50px;
+    background-image: linear-gradient(90deg, 
+      transparent calc(50% - 15px), 
+      #ffca28 calc(50% - 15px), 
+      #ffca28 calc(50% + 15px), 
+      transparent calc(50% + 15px)
+    );
+  }
+  .hero-box::before {
+      background-image: linear-gradient(90deg, 
+        transparent calc(50% - 15px), 
+        #ffca28 calc(50% - 15px), 
+        #ffca28 calc(50% + 15px), 
+        transparent calc(50% + 15px)
+    );
+  }
+  .hero-box::after {
+      width: 30px;
+  }
+
+  .hero-box h1 { font-size: 1.6rem; }
+  .hero-box p { font-size: 0.95rem; max-width: 100%; }
+}
+
+.home-links {
+    display: none !important;
+}
